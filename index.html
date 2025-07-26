@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Collapsible Sidebar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #FFEAEA;
+      --text-color: #7A7A73;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      transition: background 0.3s, color 0.3s;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    #sidebar {
+      height: 100vh;
+      width: 220px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #F5CBCB;
+      padding-top: 20px;
+      transition: width 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    #sidebar.collapsed {
+      width: 60px;
+    }
+
+    #sidebar .logo {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #57564F;
+    }
+
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #sidebar ul li {
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #sidebar ul li:hover {
+      background: #e89595;
+    }
+
+    #sidebar.collapsed ul li span {
+      display: none;
+    }
+
+    #toggleBtn, #darkModeBtn {
+      position: absolute;
+      top: 10px;
+      z-index: 2;
+      background: #f79393;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      transition: left 0.3s;
+    }
+
+    #toggleBtn {
+      left: 230px;
+    }
+
+    #sidebar.collapsed + #toggleBtn {
+      left: 80px;
+    }
+
+    #darkModeBtn {
+      top: 50px;
+      left: 230px;
+    }
+
+    #sidebar.collapsed + #toggleBtn + #darkModeBtn {
+      left: 80px;
+    }
+
+    @media (max-width: 768px) {
+      #sidebar {
+        position: absolute;
+        z-index: 1;
+      }
+      #toggleBtn, #darkModeBtn {
+        left: 70px;
+      }
+      #sidebar.collapsed + #toggleBtn,
+      #sidebar.collapsed + #toggleBtn + #darkModeBtn {
+        left: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <div class="logo">RM</div>
+    <ul>
+      <li><i class="fas fa-home"></i><span>Home</span></li>
+      <li><i class="fas fa-user"></i><span>About</span></li>
+      <li><i class="fas fa-briefcase"></i><span>Portfolio</span></li>
+      <li><i class="fas fa-envelope"></i><span>Contact</span></li>
+      <li><i class="fas fa-question-circle"></i><span>Help</span></li>
+    </ul>
+  </div>
+
+  <button id="toggleBtn" onclick="toggleSidebar()">☰</button>
+  <button id="darkModeBtn" onclick="toggleDarkMode()">🌓</button>
+
+  <script>
+    function toggleSidebar() {
+      var sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('collapsed');
+    }
+
+    function toggleDarkMode() {
+      const root = document.documentElement;
+      const currentBg = getComputedStyle(root).getPropertyValue('--bg-color').trim();
+      
+      if (currentBg === '#333') {
+        sidebar.style.background = '#F5CBCB';
+        root.style.setProperty('--bg-color', '#FFEAEA');
+        root.style.setProperty('--text-color', '#7A7A73');
+      } else {
+        sidebar.style.background = '#000000';
+        root.style.setProperty('--bg-color', '#333');
+        root.style.setProperty('--text-color', '#fff');
+      }
+    }
+  </script>
+</body>
+</html>
